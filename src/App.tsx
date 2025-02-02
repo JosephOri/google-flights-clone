@@ -1,7 +1,6 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StoreProvider } from './stores';
 import { useStore } from './stores';
-import ExampleComponent from './components/ExampleComponent';
 
 const ThemedApp = () => {
   const { themeStore } = useStore();
@@ -9,7 +8,6 @@ const ThemedApp = () => {
   return (
     <ThemeProvider theme={themeStore.currentTheme}>
       <CssBaseline />
-      <ExampleComponent />
     </ThemeProvider>
   );
 };
