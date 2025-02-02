@@ -12,12 +12,12 @@ const ThemedApp = () => {
   );
 };
 
-function App() {
+const App = () => {
   return (
     <StoreProvider>
       <ThemedApp />
     </StoreProvider>
   );
-}
+};
 
 export default App;
