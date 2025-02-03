@@ -1,11 +1,14 @@
 import { createContext, useContext } from "react";
 import ThemeStore from "./themeStore";
+import FlightStore from "./flightStore";
 
 class RootStore {
   themeStore: ThemeStore;
+  flightStore: FlightStore;
 
   constructor() {
     this.themeStore = new ThemeStore();
+    this.flightStore = new FlightStore();
   }
 }
 
