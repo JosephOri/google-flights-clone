@@ -4,24 +4,22 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#FFFFFF', // White background
-      paper: '#F5F5F5', // Off-white for paper elements
+      default: '#FFFFFF',
+      paper: '#F5F5F5',
     },
     text: {
-      primary: '#000000', // Black text
-      secondary: '#424242', // Dark gray secondary text
+      primary: '#000000',
+      secondary: '#424242',
     },
     primary: {
-      main: '#4285F4', // Example primary blue (Google uses various blues)
+      main: '#4285F4',
     },
     secondary: {
-      main: '#EA4335', // Example secondary red (for errors, etc.)
+      main: '#EA4335',
     },
-    // ... other color properties as needed
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif', // Or Google's specific font if you know it
-    // ... other typography settings
+    fontFamily: 'Roboto, sans-serif',
   },
 });
 
@@ -29,24 +27,22 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: '#121212', // Dark gray background
-      paper: '#202124',   // Near-black for paper elements
+      default: '#121212',
+      paper: '#202124',
     },
     text: {
-      primary: '#FFFFFF', // White text
-      secondary: '#E8EAED', // Light gray secondary text
+      primary: '#FFFFFF',
+      secondary: '#E8EAED',
     },
     primary: {
-      main: '#8AB4F8', // Example desaturated blue
+      main: '#8AB4F8',
     },
     secondary: {
-      main: '#F4B4AA', // Example desaturated red
+      main: '#F4B4AA',
     },
-     // ... other color properties as needed
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif', // Or Google's specific font if you know it
-    // ... other typography settings
+    fontFamily: 'Roboto, sans-serif',
   },
 });
 
