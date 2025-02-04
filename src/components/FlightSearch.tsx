@@ -9,7 +9,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PassengerSelect from './PassengerSelect';
 import AirportAutocomplete from './AirportAutocomplete';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
-import SelectFlightType from './SelectFlightType';
+import SelectFlightType from './Select/SelectFlightType';
 
 export default function FlightSearch() {
   const {
@@ -48,7 +48,6 @@ export default function FlightSearch() {
         >
           <SelectFlightType />
 
-          {/* section: passengers */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <PassengerSelect value={passengers} onChange={setPassengers} />
           </Box>
