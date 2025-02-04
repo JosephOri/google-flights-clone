@@ -1,29 +1,16 @@
 'use client';
-import { Box, Button, IconButton, Paper, Typography, Stack } from '@mui/material';
+import { Box, Button, IconButton, Paper, Typography } from '@mui/material';
 import { CompareArrows, Search } from '@mui/icons-material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PassengerSelect from './PassengerSelect';
 import AirportAutocomplete from './AirportAutocomplete';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 import SelectFlightType from './Select/SelectFlightType';
 import SelectClass from './Select/SelectClass';
+import SelectDates from './Select/SelectDates';
 
 export default function FlightSearch() {
-  const {
-    locations,
-    setLocations,
-    open,
-    setOpen,
-    dates,
-    passengers,
-    setPassengers,
-    handleDateChange,
-    handleSearch,
-    containerRef,
-  } = useFlightSearch();
+  const { locations, setLocations, passengers, setPassengers, handleSearch } = useFlightSearch();
+
   return (
     <>
       <Paper
@@ -104,91 +91,7 @@ export default function FlightSearch() {
               width: '100%',
             }}
           >
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <div ref={containerRef} id="flight-date-container">
-                <Stack
-                  direction="row"
-                  sx={{
-                    border: '1px solid #3A3B3F',
-                    borderRadius: 1,
-                    overflow: 'hidden',
-                    paddingTop: 0.5,
-                  }}
-                >
-                  <DatePicker
-                    open={open === 'departure'}
-                    onOpen={() => setOpen('departure')}
-                    onClose={() => setOpen(null)}
-                    value={dates.departure}
-                    onChange={handleDateChange('departure')}
-                    slotProps={{
-                      popper: {
-                        anchorEl: containerRef.current,
-                        placement: 'bottom-start',
-                      },
-                    }}
-                    slots={{
-                      textField: () => (
-                        <Button
-                          onClick={() => setOpen('departure')}
-                          startIcon={<CalendarTodayIcon />}
-                          sx={{
-                            flex: 1,
-                            color: '#AFB1B6',
-                            textTransform: 'none',
-                            justifyContent: 'flex-start',
-                            borderRadius: 0,
-                            padding: '10px 20px',
-                            '&:hover': {
-                              backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                            },
-                          }}
-                        >
-                          {dates.departure ? dates.departure.toLocaleDateString() : 'Departure'}
-                        </Button>
-                      ),
-                    }}
-                  />
-
-                  <DatePicker
-                    open={open === 'return'}
-                    onOpen={() => setOpen('return')}
-                    onClose={() => setOpen(null)}
-                    value={dates.return}
-                    onChange={handleDateChange('return')}
-                    slotProps={{
-                      popper: {
-                        anchorEl: containerRef.current,
-                        placement: 'bottom-start',
-                      },
-                    }}
-                    minDate={dates.departure || undefined}
-                    slots={{
-                      textField: () => (
-                        <Button
-                          onClick={() => setOpen('return')}
-                          startIcon={<CalendarTodayIcon />}
-                          sx={{
-                            flex: 1,
-                            color: '#AFB1B6',
-                            textTransform: 'none',
-                            justifyContent: 'flex-start',
-                            borderLeft: '1px solid #AFB1B6',
-                            borderRadius: 0,
-                            padding: '10px 16px',
-                            '&:hover': {
-                              backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                            },
-                          }}
-                        >
-                          {dates.return ? dates.return.toLocaleDateString() : 'Return'}
-                        </Button>
-                      ),
-                    }}
-                  />
-                </Stack>
-              </div>
-            </LocalizationProvider>
+            <SelectDates />
           </Box>
         </Box>
       </Paper>
