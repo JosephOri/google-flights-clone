@@ -17,7 +17,7 @@ export const ThemeProviderWrapper: React.FC<{ children?: React.ReactNode }> = ({
   useEffect(() => {
     const body = document.body;
     body.style.backgroundColor = theme.palette.background.default;
-  }, [isDarkMode]);
+  }, [isDarkMode, theme.palette.background.default ]);
 
   return (
     <ThemeModeContext.Provider value={{ isDarkMode, setIsDarkMode, theme }}>
