@@ -80,7 +80,6 @@ export default function FlightSearch() {
             />
           </Box>
 
-          {/* section: departure and return */}
           <Box
             sx={{
               display: 'flex',

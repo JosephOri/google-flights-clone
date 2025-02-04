@@ -18,7 +18,6 @@ interface PassengerCount {
 
 export const useFlightSearch = () => {
   const router = useRouter();
-
   const [flightType, setFlightType] = useState<FlightType>('Round-trip');
   const [cabinClass, setCabinClass] = useState<CabinClass>('Economy');
   const [locations, setLocations] = useState<FlightLocation>({ origin: '', destination: '' });
