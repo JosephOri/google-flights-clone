@@ -1,19 +1,18 @@
 'use client';
-import { Box, Button, IconButton, Select, MenuItem, Paper, Typography, Stack } from '@mui/material';
+import { Box, Button, IconButton, Paper, Typography, Stack } from '@mui/material';
 import { CompareArrows, Search } from '@mui/icons-material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PassengerSelect from './PassengerSelect';
 import AirportAutocomplete from './AirportAutocomplete';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 import SelectFlightType from './Select/SelectFlightType';
+import SelectClass from './Select/SelectClass';
 
 export default function FlightSearch() {
   const {
-    cabinClass,
     locations,
     setLocations,
     open,
@@ -21,7 +20,6 @@ export default function FlightSearch() {
     dates,
     passengers,
     setPassengers,
-    handleChangeCabinClass,
     handleDateChange,
     handleSearch,
     containerRef,
@@ -52,23 +50,7 @@ export default function FlightSearch() {
             <PassengerSelect value={passengers} onChange={setPassengers} />
           </Box>
 
-          {/* section: class */}
-          <Select
-            value={cabinClass}
-            onChange={handleChangeCabinClass}
-            size="small"
-            sx={{
-              color: '#AFB1B6',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
-            }}
-          >
-            <MenuItem value="Economy">Economy</MenuItem>
-            <MenuItem value="Premium economy">Premium Economy</MenuItem>
-            <MenuItem value="Business">Business</MenuItem>
-            <MenuItem value="First">First</MenuItem>
-          </Select>
+          <SelectClass />
         </Box>
 
         <Box
