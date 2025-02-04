@@ -9,7 +9,7 @@ interface Props {
   onChange: (value: string) => void;
 }
 
-export default function AirportAutocomplete({ type, value, onChange }: Props) {
+const AirportSearch = ({ type, value, onChange }: Props) => {
   const [inputValue, setInputValue] = useState('');
 
   const { options, loading, setSelectedAirport, selectedAirport } = useAirportSearch(inputValue);
@@ -83,4 +83,6 @@ export default function AirportAutocomplete({ type, value, onChange }: Props) {
       )}
     />
   );
-}
+};
+
+export default AirportSearch;

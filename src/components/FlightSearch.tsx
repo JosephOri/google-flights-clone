@@ -2,7 +2,7 @@
 import { Box, Button, IconButton, Paper, Typography } from '@mui/material';
 import { CompareArrows, Search } from '@mui/icons-material';
 import PassengerSelect from './PassengerSelect';
-import AirportAutocomplete from './AirportAutocomplete';
+import AirportSearch from './AirportAutocomplete';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 import SelectFlightType from './Select/SelectFlightType';
 import SelectClass from './Select/SelectClass';
@@ -56,7 +56,7 @@ export default function FlightSearch() {
               width: '100%',
             }}
           >
-            <AirportAutocomplete
+            <AirportSearch
               type="origin"
               value={locations.origin}
               onChange={(value) => setLocations((prev) => ({ ...prev, origin: value }))}
@@ -73,7 +73,7 @@ export default function FlightSearch() {
               <CompareArrows sx={{ color: 'white' }} />
             </IconButton>
 
-            <AirportAutocomplete
+            <AirportSearch
               type="destination"
               value={locations.destination}
               onChange={(value) => setLocations((prev) => ({ ...prev, destination: value }))}
