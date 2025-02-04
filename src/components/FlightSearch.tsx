@@ -9,11 +9,10 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PassengerSelect from './PassengerSelect';
 import AirportAutocomplete from './AirportAutocomplete';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
+import SelectFlightType from './SelectFlightType';
 
 export default function FlightSearch() {
   const {
-    flightType,
-
     cabinClass,
     locations,
     setLocations,
@@ -22,7 +21,6 @@ export default function FlightSearch() {
     dates,
     passengers,
     setPassengers,
-    handleChangeFlightType,
     handleChangeCabinClass,
     handleDateChange,
     handleSearch,
@@ -48,27 +46,7 @@ export default function FlightSearch() {
             alignItems: 'center',
           }}
         >
-          <Select
-            value={flightType}
-            onChange={handleChangeFlightType}
-            size="small"
-            sx={{
-              color: '#AFB1B6',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none',
-              },
-            }}
-            renderValue={(selected) => (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CompareArrowsIcon sx={{ fontSize: 20 }} />
-                {selected}
-              </div>
-            )}
-          >
-            <MenuItem value="Round-trip">Round trip</MenuItem>
-            <MenuItem value="One-way">One way</MenuItem>
-            <MenuItem value="Multi-city">Multi-city</MenuItem>
-          </Select>
+          <SelectFlightType />
 
           {/* section: passengers */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
