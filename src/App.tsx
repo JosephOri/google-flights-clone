@@ -1,23 +1,9 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { StoreProvider } from './stores';
-import { useStore } from './stores';
-
-const ThemedApp = () => {
-  const { themeStore } = useStore();
-
-  return (
-    <ThemeProvider theme={themeStore.currentTheme}>
-      <CssBaseline />
-    </ThemeProvider>
-  );
-};
+import React from 'react'
 
 const App = () => {
   return (
-    <StoreProvider>
-      <ThemedApp />
-    </StoreProvider>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App
