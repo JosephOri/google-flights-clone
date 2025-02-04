@@ -1,16 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SelectChangeEvent } from '@mui/material';
+import { useDateSelection } from './useDateSelection';
 
 type FlightType = 'Round-trip' | 'One-way' | 'Multi-city';
 type CabinClass = 'Economy' | 'Premium economy' | 'Business' | 'First';
 interface FlightLocation {
   origin: string;
   destination: string;
-}
-interface DateRange {
-  departure: Date | null;
-  return: Date | null;
 }
 interface PassengerCount {
   adults: number;
@@ -21,19 +18,17 @@ interface PassengerCount {
 
 export const useFlightSearch = () => {
   const router = useRouter();
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const [flightType, setFlightType] = useState<FlightType>('Round-trip');
   const [cabinClass, setCabinClass] = useState<CabinClass>('Economy');
   const [locations, setLocations] = useState<FlightLocation>({ origin: '', destination: '' });
-  const [open, setOpen] = useState<'departure' | 'return' | null>(null);
-  const [dates, setDates] = useState<DateRange>({ departure: null, return: null });
   const [passengers, setPassengers] = useState<PassengerCount>({
     adults: 1,
     children: 0,
     infantsInSeat: 0,
     infantsOnLap: 0,
   });
+  const { dates } = useDateSelection();
 
   const handleChangeFlightType = (event: SelectChangeEvent<FlightType>) => {
     setFlightType(event.target.value as FlightType);
@@ -41,11 +36,6 @@ export const useFlightSearch = () => {
 
   const handleChangeCabinClass = (event: SelectChangeEvent<CabinClass>) => {
     setCabinClass(event.target.value as CabinClass);
-  };
-
-  const handleDateChange = (type: 'departure' | 'return') => (date: Date | null) => {
-    setDates((prev) => ({ ...prev, [type]: date }));
-    setOpen(null);
   };
 
   const handleSearch = async () => {
@@ -94,15 +84,11 @@ export const useFlightSearch = () => {
     locations,
     setLocations,
     open,
-    setOpen,
     dates,
-    setDates,
     passengers,
     setPassengers,
     handleChangeFlightType,
     handleChangeCabinClass,
-    handleDateChange,
     handleSearch,
-    containerRef,
   };
 };

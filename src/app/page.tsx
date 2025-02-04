@@ -3,11 +3,12 @@
 import FlightSearch from '@/components/FlightSearch';
 import { Box, Typography } from '@mui/material';
 import { Suspense } from 'react';
+import Loading from './loading';
 
 function MainContent() {
   return (
     <Box
-      component='main'
+      component="main"
       sx={{
         width: '100%',
         minWidth: '100%',
@@ -34,7 +35,7 @@ function MainContent() {
         }}
       >
         <Typography
-          variant='h1'
+          variant="h1"
           sx={{
             fontSize: { xs: '2rem', sm: '2.5rem', md: '3.5rem' },
             fontWeight: 'normal',
@@ -46,11 +47,13 @@ function MainContent() {
         </Typography>
       </Box>
 
-      <Box sx={{ 
-        maxWidth: 800, 
-        mx: 'auto',
-        px: { xs: 2, sm: 3, md: 4 }
-      }}>
+      <Box
+        sx={{
+          maxWidth: 800,
+          mx: 'auto',
+          px: { xs: 2, sm: 3, md: 4 },
+        }}
+      >
         <FlightSearch />
       </Box>
     </Box>
@@ -59,7 +62,7 @@ function MainContent() {
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <MainContent />
     </Suspense>
   );
