@@ -39,10 +39,8 @@ interface FlightSearchContextType {
   containerRef: React.RefObject<HTMLDivElement>;
 }
 
-// Create context
 const FlightSearchContext = createContext<FlightSearchContextType | undefined>(undefined);
 
-// Provider component
 export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
