@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import React, { createContext, useContext, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { SelectChangeEvent } from '@mui/material';
-import { useDateSelection } from './useDateSelection';
 
 type FlightType = 'Round-trip' | 'One-way' | 'Multi-city';
 type CabinClass = 'Economy' | 'Premium economy' | 'Business' | 'First';
 interface FlightLocation {
   origin: string;
   destination: string;
+}
+interface DateRange {
+  departure: Date | null;
+  return: Date | null;
 }
 interface PassengerCount {
   adults: number;
@@ -16,18 +19,45 @@ interface PassengerCount {
   infantsOnLap: number;
 }
 
-export const useFlightSearch = () => {
+interface FlightSearchContextType {
+  flightType: FlightType;
+  setFlightType: (type: FlightType) => void;
+  cabinClass: CabinClass;
+  setCabinClass: (classType: CabinClass) => void;
+  locations: FlightLocation;
+  setLocations: (loc: FlightLocation) => void;
+  open: 'departure' | 'return' | null;
+  setOpen: (open: 'departure' | 'return' | null) => void;
+  dates: DateRange;
+  setDates: React.Dispatch<React.SetStateAction<DateRange>>;
+  passengers: PassengerCount;
+  setPassengers: React.Dispatch<React.SetStateAction<PassengerCount>>;
+  handleChangeFlightType: (event: SelectChangeEvent<FlightType>) => void;
+  handleChangeCabinClass: (event: SelectChangeEvent<CabinClass>) => void;
+  handleDateChange: (type: 'departure' | 'return') => (date: Date | null) => void;
+  handleSearch: () => Promise<void>;
+  containerRef: React.RefObject<HTMLDivElement>;
+}
+
+// Create context
+const FlightSearchContext = createContext<FlightSearchContextType | undefined>(undefined);
+
+// Provider component
+export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const [flightType, setFlightType] = useState<FlightType>('Round-trip');
   const [cabinClass, setCabinClass] = useState<CabinClass>('Economy');
   const [locations, setLocations] = useState<FlightLocation>({ origin: '', destination: '' });
+  const [open, setOpen] = useState<'departure' | 'return' | null>(null);
+  const [dates, setDates] = useState<DateRange>({ departure: null, return: null });
   const [passengers, setPassengers] = useState<PassengerCount>({
     adults: 1,
     children: 0,
     infantsInSeat: 0,
     infantsOnLap: 0,
   });
-  const { dates } = useDateSelection();
 
   const handleChangeFlightType = (event: SelectChangeEvent<FlightType>) => {
     setFlightType(event.target.value as FlightType);
@@ -35,6 +65,11 @@ export const useFlightSearch = () => {
 
   const handleChangeCabinClass = (event: SelectChangeEvent<CabinClass>) => {
     setCabinClass(event.target.value as CabinClass);
+  };
+
+  const handleDateChange = (type: 'departure' | 'return') => (date: Date | null) => {
+    setDates((prev) => ({ ...prev, [type]: date }));
+    setOpen(null);
   };
 
   const handleSearch = async () => {
@@ -75,19 +110,37 @@ export const useFlightSearch = () => {
     }
   };
 
-  return {
-    flightType,
-    setFlightType,
-    cabinClass,
-    setCabinClass,
-    locations,
-    setLocations,
-    open,
-    dates,
-    passengers,
-    setPassengers,
-    handleChangeFlightType,
-    handleChangeCabinClass,
-    handleSearch,
-  };
+  return (
+    <FlightSearchContext.Provider
+      value={{
+        flightType,
+        setFlightType,
+        cabinClass,
+        setCabinClass,
+        locations,
+        setLocations,
+        open,
+        setOpen,
+        dates,
+        setDates,
+        passengers,
+        setPassengers,
+        handleChangeFlightType,
+        handleChangeCabinClass,
+        handleDateChange,
+        handleSearch,
+        containerRef,
+      }}
+    >
+      {children}
+    </FlightSearchContext.Provider>
+  );
+};
+
+export const useFlightSearch = () => {
+  const context = useContext(FlightSearchContext);
+  if (context === undefined) {
+    throw new Error('useFlightSearchContext must be used within a FlightSearchProvider');
+  }
+  return context;
 };

@@ -4,6 +4,7 @@ import FlightSearch from '@/components/FlightSearch';
 import { Box, Typography } from '@mui/material';
 import { Suspense } from 'react';
 import Loading from './loading';
+import { FlightSearchProvider } from './hooks/useFlightSearch';
 
 function MainContent() {
   return (
@@ -62,8 +63,10 @@ function MainContent() {
 
 export default function Home() {
   return (
-    <Suspense fallback={<Loading />}>
-      <MainContent />
-    </Suspense>
+    <FlightSearchProvider>
+      <Suspense fallback={<Loading />}>
+        <MainContent />
+      </Suspense>
+    </FlightSearchProvider>
   );
 }

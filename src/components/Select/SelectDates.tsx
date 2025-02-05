@@ -4,10 +4,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Button, Stack } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import { useDateSelection } from '@/app/hooks/useDateSelection';
-
+import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 const SelectDates = () => {
-  const { open, setOpen, dates, handleDateChange, containerRef } = useDateSelection();
+  const { open, setOpen, dates, handleDateChange, containerRef } = useFlightSearch();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
