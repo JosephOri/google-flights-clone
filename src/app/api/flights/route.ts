@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { FlightSearchData } from '@/types/flight';
-import { API_HOST, API_KEY, SEARCH_FLIGHT_URL } from '@/app/constants/urls';
+import { REQUEST_HEADERS, SEARCH_FLIGHT_URL } from '@/app/constants/urls';
 import { LocationIds, ApiItinerary, ApiResponse } from './types';
 
 const formatDate = (date: Date) => {
@@ -72,10 +72,7 @@ export async function POST(request: Request) {
 
     const response = await fetch(`${SEARCH_FLIGHT_URL}?${params}`, {
       method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': API_KEY,
-        'X-RapidAPI-Host': API_HOST,
-      },
+      headers: REQUEST_HEADERS,
     });
 
     const flightData: ApiResponse = await response.json();
