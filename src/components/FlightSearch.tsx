@@ -59,7 +59,12 @@ export default function FlightSearch() {
             <AirportSearch
               type="origin"
               value={locations.origin}
-              onChange={(value) => setLocations((prev) => ({ ...prev, origin: value }))}
+              onChange={(value) =>
+                setLocations((prev) => ({
+                  ...prev,
+                  origin: value,
+                }))
+              }
             />
 
             <IconButton
@@ -76,7 +81,12 @@ export default function FlightSearch() {
             <AirportSearch
               type="destination"
               value={locations.destination}
-              onChange={(value) => setLocations((prev) => ({ ...prev, destination: value }))}
+              onChange={(value) =>
+                setLocations((prev) => ({
+                  ...prev,
+                  destination: value,
+                }))
+              }
             />
           </Box>
 

@@ -1,23 +1,7 @@
 import React, { createContext, useContext, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { SelectChangeEvent } from '@mui/material';
-
-type FlightType = 'Round-trip' | 'One-way' | 'Multi-city';
-type CabinClass = 'Economy' | 'Premium economy' | 'Business' | 'First';
-interface FlightLocation {
-  origin: string;
-  destination: string;
-}
-interface DateRange {
-  departure: Date | null;
-  return: Date | null;
-}
-interface PassengerCount {
-  adults: number;
-  children: number;
-  infantsInSeat: number;
-  infantsOnLap: number;
-}
+import { CabinClass, FlightLocation, FlightType, PassengerCount, DateRange } from '../types/flight.types';
 
 interface FlightSearchContextType {
   flightType: FlightType;
@@ -47,7 +31,7 @@ export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const [flightType, setFlightType] = useState<FlightType>('Round-trip');
   const [cabinClass, setCabinClass] = useState<CabinClass>('Economy');
-  const [locations, setLocations] = useState<FlightLocation>({ origin: '', destination: '' });
+  const [locations, setLocations] = useState<FlightLocation>({ origin: null, destination: null });
   const [open, setOpen] = useState<'departure' | 'return' | null>(null);
   const [dates, setDates] = useState<DateRange>({ departure: null, return: null });
   const [passengers, setPassengers] = useState<PassengerCount>({

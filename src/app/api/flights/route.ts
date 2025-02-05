@@ -1,15 +1,10 @@
 import { NextResponse } from 'next/server';
-import type { FlightSearchData } from '@/types/flight';
 import { REQUEST_HEADERS, SEARCH_FLIGHT_URL } from '@/app/constants/urls';
-import { LocationIds, ApiItinerary, ApiResponse } from './types';
+import { ApiItinerary, ApiResponse } from './types';
+import { FlightSearchData } from '@/app/types/flight.types';
 
 const formatDate = (date: Date) => {
   return date.toISOString().split('T')[0];
-};
-
-const isCommercialAirport = (skyId: string) => {
-  const nonCommercialAirports = ['OPF'];
-  return !nonCommercialAirports.includes(skyId);
 };
 
 export async function POST(request: Request) {
@@ -17,24 +12,8 @@ export async function POST(request: Request) {
     const searchData: FlightSearchData = await request.json();
     console.log('Search Request Data:', JSON.stringify(searchData, null, 2));
 
-    const originIds: LocationIds = JSON.parse(searchData.locations.origin);
-    const destinationIds: LocationIds = JSON.parse(searchData.locations.destination);
-
-    if (!isCommercialAirport(originIds.skyId)) {
-      return NextResponse.json({
-        searchId: Date.now().toString(),
-        flights: [],
-        message: `${originIds.skyId} is not a commercial airport. Please select a major airport.`,
-      });
-    }
-
-    if (!isCommercialAirport(destinationIds.skyId)) {
-      return NextResponse.json({
-        searchId: Date.now().toString(),
-        flights: [],
-        message: `${destinationIds.skyId} is not a commercial airport. Please select a major airport.`,
-      });
-    }
+    const originIds = searchData.locations.origin;
+    const destinationIds = searchData.locations.destination;
 
     if (!searchData.locations.origin || !searchData.locations.destination || !searchData.dates.departure) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });

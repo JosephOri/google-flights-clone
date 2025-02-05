@@ -1,22 +1,6 @@
 import { useState, useEffect } from 'react';
 import { REQUEST_HEADERS, SEARCH_AIRPORT_URL } from '../constants/urls';
-
-export interface ApiAirport {
-  skyId: string;
-  entityId: string;
-  presentation: {
-    title: string;
-    subtitle: string;
-  };
-}
-
-export interface Airport {
-  iataCode: string;
-  name: string;
-  cityName: string;
-  skyId: string;
-  entityId: string;
-}
+import { Airport, ApiAirport } from '../types/airport.types';
 
 export const useAirportSearch = (inputValue: string) => {
   const [options, setOptions] = useState<Airport[]>([]);
@@ -42,7 +26,7 @@ export const useAirportSearch = (inputValue: string) => {
           throw new Error(`API error: ${response.status}`);
         }
         const data = await response.json();
-        
+
         if (active && data.data && Array.isArray(data.data)) {
           const airports: Airport[] = data.data
             .map((airport: ApiAirport) => ({

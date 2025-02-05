@@ -1,40 +1,26 @@
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { FlightTakeoff, FlightLand } from '@mui/icons-material';
-import { useAirportSearch, Airport } from '@/app/hooks/useAirportSearch';
+import { useAirportSearch } from '@/app/hooks/useAirportSearch';
+import { Airport } from '@/app/types/airport.types';
 
 interface Props {
   type: 'origin' | 'destination';
-  value: string;
-  onChange: (value: string) => void;
+  value: Airport | null;
+  onChange: (value: Airport | null) => void;
 }
-
 const AirportSearch = ({ type, value, onChange }: Props) => {
   const [inputValue, setInputValue] = useState('');
 
   const { options, loading, setSelectedAirport, selectedAirport } = useAirportSearch(inputValue);
 
   const handleAirportChange = (event: React.SyntheticEvent, newValue: Airport | null) => {
-    if (newValue) {
-      setSelectedAirport(newValue);
-      onChange(JSON.stringify({ skyId: newValue.skyId, entityId: newValue.entityId }));
-    } else {
-      setSelectedAirport(null);
-      onChange('');
-    }
+    setSelectedAirport(newValue);
+    onChange(newValue); // Pass full Airport object
   };
+
   useEffect(() => {
-    if (value) {
-      setSelectedAirport({
-        iataCode: value,
-        name: value,
-        cityName: value,
-        skyId: value,
-        entityId: value,
-      });
-    } else {
-      setSelectedAirport(null);
-    }
+    setSelectedAirport(value);
   }, [value]);
 
   return (
@@ -46,7 +32,12 @@ const AirportSearch = ({ type, value, onChange }: Props) => {
         setInputValue(newInputValue);
       }}
       options={options}
-      getOptionLabel={(option) => `${option.cityName} (${option.iataCode}) - ${option.name}`}
+      getOptionLabel={(option) => `${option.iataCode}`}
+      renderOption={(props, option) => (
+        <li {...props} key={option.iataCode}>
+          {`${option.cityName} (${option.iataCode}) - ${option.name}`}
+        </li>
+      )}
       isOptionEqualToValue={(option, value) => option.iataCode === value.iataCode}
       loading={loading}
       loadingText="Searching airports..."

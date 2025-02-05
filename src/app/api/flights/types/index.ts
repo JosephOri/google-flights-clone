@@ -1,6 +1,9 @@
 interface LocationIds {
   skyId: string;
   entityId: string;
+  iataCode: string;
+  name: string;
+  cityName: string;
 }
 
 interface ApiItinerary {
