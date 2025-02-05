@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { FlightSearchData } from '@/types/flight';
 import { API_HOST, API_KEY, SEARCH_FLIGHT_URL } from '@/app/constants/urls';
 import { LocationIds, ApiItinerary, ApiResponse } from './types';
+
 const formatDate = (date: Date) => {
   return date.toISOString().split('T')[0];
 };
@@ -53,17 +54,6 @@ export async function POST(request: Request) {
       First: 'first',
     };
 
-    console.log('Search Parameters:', {
-      originSkyId: originIds.skyId,
-      destinationSkyId: destinationIds.skyId,
-      originEntityId: originIds.entityId,
-      destinationEntityId: destinationIds.entityId,
-      date: departureDate,
-      returnDate,
-      adults: searchData.passengers.adults,
-      cabinClass: cabinClassMap[searchData.cabinClass],
-    });
-
     const params = new URLSearchParams({
       originSkyId: originIds.skyId,
       destinationSkyId: destinationIds.skyId,
@@ -89,8 +79,6 @@ export async function POST(request: Request) {
     });
 
     const flightData: ApiResponse = await response.json();
-    console.log('API Response Status:', response.status);
-    console.log('API Response:', JSON.stringify(flightData, null, 2));
 
     if (!response.ok) {
       throw new Error(`API request failed: ${response.status}`);
