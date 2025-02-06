@@ -1,5 +1,5 @@
 'use client';
-import { Box, Button, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Paper, Typography } from '@mui/material';
 import { CompareArrows, Search } from '@mui/icons-material';
 import PassengerSelect from './PassengerSelect';
 import AirportSearch from './AirportAutocomplete';
@@ -7,9 +7,10 @@ import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 import SelectFlightType from './Select/SelectFlightType';
 import SelectClass from './Select/SelectClass';
 import SelectDates from './Select/SelectDates';
+import Loading from '@/app/loading';
 
 export default function FlightSearch() {
-  const { locations, setLocations, passengers, setPassengers, handleSearch } = useFlightSearch();
+  const { locations, setLocations, passengers, setPassengers, handleSearch, isSearchLoading } = useFlightSearch();
 
   return (
     <>
@@ -54,12 +55,18 @@ export default function FlightSearch() {
               flexDirection: { xs: 'column', sm: 'row' },
               gap: 2,
               width: '100%',
+              flex: 1,
             }}
           >
             <AirportSearch
               type="origin"
               value={locations.origin}
-              onChange={(value) => setLocations((prev) => ({ ...prev, origin: value }))}
+              onChange={(value) =>
+                setLocations((prev) => ({
+                  ...prev,
+                  origin: value,
+                }))
+              }
             />
 
             <IconButton
@@ -76,7 +83,12 @@ export default function FlightSearch() {
             <AirportSearch
               type="destination"
               value={locations.destination}
-              onChange={(value) => setLocations((prev) => ({ ...prev, destination: value }))}
+              onChange={(value) =>
+                setLocations((prev) => ({
+                  ...prev,
+                  destination: value,
+                }))
+              }
             />
           </Box>
 
@@ -88,6 +100,7 @@ export default function FlightSearch() {
               flexDirection: { xs: 'column', sm: 'row' },
               gap: 2,
               width: '100%',
+              flex: 1,
             }}
           >
             <SelectDates />
@@ -105,7 +118,7 @@ export default function FlightSearch() {
           onClick={handleSearch}
           sx={{
             bgcolor: '#8AB4F8',
-            width: '20%',
+            width: '7rem',
             borderRadius: 10,
             textTransform: 'none',
             '&:hover': {
@@ -113,8 +126,8 @@ export default function FlightSearch() {
             },
           }}
         >
-          <Search sx={{ color: '#202123' }} />
-          <Typography sx={{ color: '#202123' }}>Search</Typography>
+          {!isSearchLoading && <Search sx={{ color: '#202123' }} />}
+          <Typography sx={{ color: '#202123' }}>{isSearchLoading ? <CircularProgress /> : 'search'}</Typography>
         </Button>
       </Box>
     </>

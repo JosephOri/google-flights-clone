@@ -1,21 +1,6 @@
 import { useState, useEffect } from 'react';
-
-export interface ApiAirport {
-  skyId: string;
-  entityId: string;
-  presentation: {
-    title: string;
-    subtitle: string;
-  };
-}
-
-export interface Airport {
-  iataCode: string;
-  name: string;
-  cityName: string;
-  skyId: string;
-  entityId: string;
-}
+import { REQUEST_HEADERS, SEARCH_AIRPORT_URL } from '../constants/urls';
+import { Airport, ApiAirport } from '../types/airport.types';
 
 export const useAirportSearch = (inputValue: string) => {
   const [options, setOptions] = useState<Airport[]>([]);
@@ -33,22 +18,14 @@ export const useAirportSearch = (inputValue: string) => {
 
       setLoading(true);
       try {
-        const response = await fetch(
-          `https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchAirport?query=${encodeURIComponent(inputValue)}`,
-          {
-            headers: {
-              'X-RapidAPI-Key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY || '',
-              'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
-            },
-          }
-        );
+        const response = await fetch(`${SEARCH_AIRPORT_URL}?query=${encodeURIComponent(inputValue)}`, {
+          headers: REQUEST_HEADERS,
+        });
 
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
         }
-
         const data = await response.json();
-        console.log('Airport Search Response:', JSON.stringify(data, null, 2));
 
         if (active && data.data && Array.isArray(data.data)) {
           const airports: Airport[] = data.data
