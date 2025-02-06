@@ -1,7 +1,7 @@
 import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { Container, Stack } from '@mui/material';
+import { Container } from '@mui/material';
 import DatePickerButton from './DatePickerButton';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
 

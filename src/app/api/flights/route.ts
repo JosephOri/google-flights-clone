@@ -47,6 +47,7 @@ export async function POST(request: Request) {
       currency: 'USD',
       market: 'US',
       countryCode: 'US',
+      limit: '10',
     });
 
     const response = await fetch(`${SEARCH_FLIGHT_URL}?${params}`, {
@@ -69,7 +70,8 @@ export async function POST(request: Request) {
     }
 
     const searchId = Date.now().toString();
-    const mappedFlights = flightData.data.itineraries.map((flight: ApiItinerary) => ({
+    const limitedFlightData = flightData.data.itineraries.slice(0, 10);
+    const mappedFlights = limitedFlightData.map((flight: ApiItinerary) => ({
       id: flight.id,
       price: {
         amount: parseFloat(String(flight.price.raw)) || 0,

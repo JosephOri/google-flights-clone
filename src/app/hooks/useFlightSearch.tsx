@@ -21,6 +21,7 @@ interface FlightSearchContextType {
   handleDateChange: (type: 'departure' | 'return') => (date: Date | null) => void;
   handleSearch: () => Promise<void>;
   containerRef: React.RefObject<HTMLDivElement>;
+  isSearchLoading: boolean;
 }
 
 const FlightSearchContext = createContext<FlightSearchContextType | undefined>(undefined);
@@ -40,6 +41,7 @@ export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ 
     infantsInSeat: 0,
     infantsOnLap: 0,
   });
+  const [isSearchLoading, setItSearchLoading] = useState(false);
 
   const handleChangeFlightType = (event: SelectChangeEvent<FlightType>) => {
     setFlightType(event.target.value as FlightType);
@@ -55,6 +57,7 @@ export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   const handleSearch = async () => {
+    setItSearchLoading(true);
     if (!locations.origin) return alert('Please select an origin airport');
     if (!locations.destination) return alert('Please select a destination airport');
     if (locations.origin === locations.destination) return alert('Origin and destination cannot be the same');
@@ -90,6 +93,7 @@ export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ 
       alert(error instanceof Error ? error.message : 'Failed to search flights. Please try again.');
       console.error('Error details:', error);
     }
+    setItSearchLoading(false);
   };
 
   return (
@@ -112,6 +116,7 @@ export const FlightSearchProvider: React.FC<{ children: React.ReactNode }> = ({ 
         handleDateChange,
         handleSearch,
         containerRef,
+        isSearchLoading,
       }}
     >
       {children}
