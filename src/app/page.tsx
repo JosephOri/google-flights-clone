@@ -12,10 +12,12 @@ function MainContent() {
       component="main"
       sx={{
         width: '100%',
-        minWidth: '100%',
         minHeight: '100vh',
         bgcolor: '#202123',
         p: { xs: 2, sm: 4, md: 8 },
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <Box
@@ -50,8 +52,8 @@ function MainContent() {
 
       <Box
         sx={{
-          maxWidth: 800,
-          mx: 'auto',
+          maxWidth: { xs: '100%', sm: '800px', md: '1000px' },
+          width: '100%',
           px: { xs: 2, sm: 3, md: 4 },
         }}
       >

@@ -1,98 +1,47 @@
 import React from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { Button, Stack } from '@mui/material';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { Container, Stack } from '@mui/material';
+import DatePickerButton from './DatePickerButton';
 import { useFlightSearch } from '@/app/hooks/useFlightSearch';
+
 const SelectDates = () => {
   const { open, setOpen, dates, handleDateChange, containerRef } = useFlightSearch();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div ref={containerRef} id="flight-date-container">
-        <Stack
-          direction="row"
-          sx={{
-            border: '1px solid #3A3B3F',
-            borderRadius: 1,
-            overflow: 'hidden',
-            paddingTop: 0.5,
-          }}
-        >
-          <DatePicker
-            open={open === 'departure'}
-            onOpen={() => setOpen('departure')}
-            onClose={() => setOpen(null)}
-            value={dates.departure}
-            onChange={handleDateChange('departure')}
-            slotProps={{
-              popper: {
-                anchorEl: containerRef.current,
-                placement: 'bottom-start',
-              },
-            }}
-            slots={{
-              textField: () => (
-                <Button
-                  onClick={() => setOpen('departure')}
-                  startIcon={<CalendarTodayIcon />}
-                  sx={{
-                    flex: 1,
-                    color: '#AFB1B6',
-                    textTransform: 'none',
-                    justifyContent: 'flex-start',
-                    borderRadius: 0,
-                    padding: '10px 20px',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    },
-                  }}
-                >
-                  {dates.departure ? dates.departure.toLocaleDateString() : 'Departure'}
-                </Button>
-              ),
-            }}
-          />
-
-          <DatePicker
-            open={open === 'return'}
-            onOpen={() => setOpen('return')}
-            onClose={() => setOpen(null)}
-            value={dates.return}
-            onChange={handleDateChange('return')}
-            slotProps={{
-              popper: {
-                anchorEl: containerRef.current,
-                placement: 'bottom-start',
-              },
-            }}
-            minDate={dates.departure || undefined}
-            slots={{
-              textField: () => (
-                <Button
-                  onClick={() => setOpen('return')}
-                  startIcon={<CalendarTodayIcon />}
-                  sx={{
-                    flex: 1,
-                    color: '#AFB1B6',
-                    textTransform: 'none',
-                    justifyContent: 'flex-start',
-                    borderLeft: '1px solid #AFB1B6',
-                    borderRadius: 0,
-                    padding: '10px 16px',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    },
-                  }}
-                >
-                  {dates.return ? dates.return.toLocaleDateString() : 'Return'}
-                </Button>
-              ),
-            }}
-          />
-        </Stack>
-      </div>
+      <Container
+        sx={{
+          border: '1px solid #3A3B3F',
+          borderRadius: 1,
+          overflow: 'hidden',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+        ref={containerRef}
+        id="flight-date-container"
+      >
+        <DatePickerButton
+          open={open === 'departure'}
+          onOpen={() => setOpen('departure')}
+          onClose={() => setOpen(null)}
+          value={dates.departure}
+          onChange={handleDateChange('departure')}
+          label="Departure"
+          anchorEl={containerRef.current}
+        />
+        <DatePickerButton
+          open={open === 'return'}
+          onOpen={() => setOpen('return')}
+          onClose={() => setOpen(null)}
+          value={dates.return}
+          onChange={handleDateChange('return')}
+          label="Return"
+          minDate={dates.departure || undefined}
+          anchorEl={containerRef.current}
+        />
+      </Container>
     </LocalizationProvider>
   );
 };

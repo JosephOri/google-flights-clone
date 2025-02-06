@@ -54,6 +54,7 @@ export default function FlightSearch() {
               flexDirection: { xs: 'column', sm: 'row' },
               gap: 2,
               width: '100%',
+              flex: 1,
             }}
           >
             <AirportSearch
@@ -98,6 +99,7 @@ export default function FlightSearch() {
               flexDirection: { xs: 'column', sm: 'row' },
               gap: 2,
               width: '100%',
+              flex: 1,
             }}
           >
             <SelectDates />
@@ -115,7 +117,7 @@ export default function FlightSearch() {
           onClick={handleSearch}
           sx={{
             bgcolor: '#8AB4F8',
-            width: '20%',
+            width: '7rem',
             borderRadius: 10,
             textTransform: 'none',
             '&:hover': {
