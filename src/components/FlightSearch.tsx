@@ -41,6 +41,7 @@ export default function FlightSearch() {
           <SelectClass />
         </Box>
 
+
         <Box
           sx={{
             display: 'flex',
